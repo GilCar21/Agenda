@@ -17,5 +17,7 @@ export default class UserUseCase {
     return result;
   }
 
+  
+
 }
 
