@@ -1,4 +1,4 @@
-import { ContactCreate, ContactsRepository } from "../interfaces/contacts.interface";
+import { ContactCreate, Contacts, ContactsRepository } from "../interfaces/contacts.interface";
 import { UserRepository } from "../interfaces/user.interfaces";
 import { ContactsRepositoryPrisma } from "../repositories/contact.repository";
 import { UserRepositoryPrima } from "../repositories/user.repository";
@@ -39,5 +39,15 @@ export class ContactUseCase {
     const contacts = await this.contactRepository.findAllContacts(user.id);
 
     return contacts
+  }
+
+  async updateContacts({ id, name, email, phone }: Contacts){
+    const data = await this.contactRepository.updateContacts({id, name, email, phone})
+    return data;
+  }
+
+  async deleteContacts(id: string){
+    const data = await this.contactRepository.deleteContacts(id)
+    return data;
   }
 }

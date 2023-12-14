@@ -22,7 +22,7 @@ export async function contactRoutes(fastify: FastifyInstance){
     }catch(err){
       reply.send(err)
     }
-  })
+  });
 
   fastify.get('/', async (req, reply) =>{
     const emailUser = req.headers["email"]
@@ -33,6 +33,27 @@ export async function contactRoutes(fastify: FastifyInstance){
       reply.send(error)
     }
     
+  });
+
+  fastify.put<{Body: ContactCreate, Params: {id: string}}>('/:id', async (req,replay)=>{
+    const { id } = req.params;
+    const { name, email, phone } = req.body;
+    try {
+      const data = await contactUseCase.updateContacts({id, name, email, phone});
+      return replay.send(data);
+    } catch (error){
+      replay.send(error)
+    }
+  })
+
+  fastify.delete<{Params: {id: string}}>('/:id', async (req,replay)=>{
+    const { id } = req.params;
+    try {
+      const data = await contactUseCase.deleteContacts(id);
+      return replay.send(data);
+    } catch (error){
+      replay.send(error)
+    }
   })
 
 }
