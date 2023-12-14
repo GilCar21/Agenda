@@ -10,7 +10,7 @@ export async function contactRoutes(fastify: FastifyInstance){
   fastify.addHook("preHandler", authMiddleware )
   fastify.post<{Body: ContactCreate}>('/', async (req, reply) => {
     const { name, email, phone } = req.body;
-    const emailUser = req.body["email"]
+    const emailUser = req.headers["email"]
     try{
       const data = await contactUseCase.create({
         name,
